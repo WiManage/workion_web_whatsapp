@@ -10,15 +10,16 @@ app.listen(port, () => {
 
 app.use(express.json());
 
-// var con = mysql.createConnection({
-//   host: process.env.DB_HOST, // || "127.0.0.1",
-//   port: process.env.DB_PORT, // || 8889,
-//   database: process.env.DB_DATABASE, // || 'manuveluniv_v3_db',
-//   user: process.env.DB_USERNAME, // || "root",
-//   password: process.env.DB_PASSWORD// || "root",
+var con = mysql.createConnection({
+  host: process.env.DB_HOST, // || "127.0.0.1",
+  port: process.env.DB_PORT, // || 8889,
+  database: process.env.DB_DATABASE, // || 'manuveluniv_v3_db',
+  user: process.env.DB_USERNAME, // || "root",
+  password: process.env.DB_PASSWORD// || "root",
 
-// });
+});
 
+/*
 var con = mysql.createConnection({
   host: "127.0.0.1",
   port: 8889,
@@ -27,6 +28,7 @@ var con = mysql.createConnection({
   password: "root",
 
 });
+*/
 
 con.connect(function(err) {
   if (err) throw err;
