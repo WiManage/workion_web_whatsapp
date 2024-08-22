@@ -14,7 +14,6 @@ RUN npm install --legacy-peer-deps
 
 RUN chmod +x /usr/src/app/.deploy/entrypoint.sh
 RUN chmod +x /usr/src/app/.deploy/env.sh
-RUN cp -r /usr/src/app/app.config.js /usr/src/app/dist/app.config.js
-WORKDIR /usr/src/app/dist
+WORKDIR /usr/src/app
 EXPOSE 8889
 CMD ["sh","/usr/src/app/.deploy/entrypoint.sh"]
