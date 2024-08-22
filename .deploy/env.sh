@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Chemin du fichier .env
-ENV_FILE=/usr/src/app/dist/.env
+ENV_FILE=/usr/src/app/.env
 
 # Supprimer le fichier s'il existe déjà
 if [ -f $ENV_FILE ]; then
