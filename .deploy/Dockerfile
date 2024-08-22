@@ -17,5 +17,5 @@ RUN chmod +x /usr/src/app/.deploy/entrypoint.sh
 RUN chmod +x /usr/src/app/.deploy/env.sh
 RUN cp -r /usr/src/app/app.config.js /usr/src/app/dist/app.config.js
 WORKDIR /usr/src/app/dist
-
+EXPOSE 8889
 CMD ["sh","/usr/src/app/.deploy/entrypoint.sh"]
