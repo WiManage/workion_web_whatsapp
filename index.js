@@ -20,7 +20,7 @@ app.use(express.json());
 // });
 
 var con = mysql.createConnection({
-  host: "0.0.0.0",
+  host: "127.0.0.1",
   port: 8889,
   database: 'manuveluniv_v3_db',
   user: "root",
