@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    orion:
+      container_name: orion_web_whatsapp
+      restart: always
+      build: .
+      # volumes:
+      #   - ./:/usr/src/orion-backend-service
+      ports:
+        - 3001:3001

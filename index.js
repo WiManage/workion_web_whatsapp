@@ -1,8 +1,12 @@
 const express = require("express");
-var mysql = require('mysql');
+const mongoose = require('mongoose');
+const connectDB = require('./db');
+const AppSettings = require('./models/AppSettings');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const app = express();
 const port = 3001;
+
+
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
@@ -10,14 +14,9 @@ app.listen(port, () => {
 
 app.use(express.json());
 
-var con = mysql.createConnection({
-  host: process.env.DB_HOST, // || "127.0.0.1",
-  port: process.env.DB_PORT, // || 8889,
-  database: process.env.DB_DATABASE, // || 'manuveluniv_v3_db',
-  user: process.env.DB_USERNAME, // || "root",
-  password: process.env.DB_PASSWORD// || "root",
 
-});
+// Connexion à MongoDB
+connectDB();
 
 /*
 var con = mysql.createConnection({
@@ -30,10 +29,10 @@ var con = mysql.createConnection({
 });
 */
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Database Connected!");
-});
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Database Connected!");
+// });
 
 const client = (this._client = new Client({
     restartOnAuthFail: true,
@@ -60,14 +59,17 @@ const client = (this._client = new Client({
   }));
 
 
-client.on('qr', (qr) => {
+client.on('qr', async (qr) => {
     // Generate and scan this code with your phone
     console.log('QR RECEIVED', qr);
-    con.query("UPDATE settings SET value = \"" + qr + "\" where settings.key = \"whatsapp-qrcode\""  , function (err, result) {
-      if (err) throw err;
-      console.log(result)
-      console.log("QR Code Updated: " + qr);
-    });
+
+    const settings = await AppSettings.findOneAndUpdate({}, { qr }, { new: true });
+    
+    // con.query("UPDATE settings SET value = \"" + qr + "\" where settings.key = \"whatsapp-qrcode\""  , function (err, result) {
+    //   if (err) throw err;
+    //   console.log(result)
+    //   console.log("QR Code Updated: " + qr);
+    // });
 });
 
 client.on('ready', () => {
