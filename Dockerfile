@@ -1,6 +1,6 @@
 FROM node:18-alpine3.17
 
-RUN apk add --no-cache bash chromium chromium-browser && npm install -g pm2 --unsafe-perm
+RUN apk add --no-cache bash chromium && npm install -g pm2 --unsafe-perm
 
 # # Create system user to run command
 # RUN adduser --uid 1001 --disabled-password --gecos '' orion \
@@ -15,6 +15,10 @@ RUN apk add --no-cache bash chromium chromium-browser && npm install -g pm2 --un
 RUN mkdir -p /usr/src/orion-web-whatsapp
 # Set working directory
 WORKDIR /usr/src/orion-web-whatsapp
+
+# Définir la variable d'environnement pour le sandboxing
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+  PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 COPY package*.json ./
 
