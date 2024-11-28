@@ -9,3 +9,9 @@ services:
       #   - ./:/usr/src/orion-backend-service
       ports:
         - 3001:3001
+      networks:
+      - orion_network  # Connect to the custom network
+
+networks:
+  orion_network:  # Define the custom network for inter-container communication
+    driver: bridge
