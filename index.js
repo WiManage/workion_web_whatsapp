@@ -18,22 +18,6 @@ app.use(express.json());
 // Connexion à MongoDB
 connectDB();
 
-/*
-var con = mysql.createConnection({
-  host: "127.0.0.1",
-  port: 8889,
-  database: 'manuveluniv_v3_db',
-  user: "root",
-  password: "root",
-
-});
-*/
-
-// con.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Database Connected!");
-// });
-
 const client = (this._client = new Client({
     restartOnAuthFail: true,
     takeoverOnConflict: true,
@@ -70,6 +54,15 @@ client.on('qr', async (qr) => {
     //   console.log(result)
     //   console.log("QR Code Updated: " + qr);
     // });
+});
+
+client.on('message', async msg => {
+  console.log(msg.type)
+   if(msg.type == 'ptt'){
+      // is a voice message
+   } else {
+
+   }
 });
 
 client.on('ready', () => {
