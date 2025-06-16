@@ -1,8 +1,13 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const connectDB = require('./db');
-const AppSettings = require('./models/AppSettings');
+const appSettings = require('./models/appSettings');
+const admin = require('./models/admin');
+const offres = require('./models/offres');
+const user = require('./models/user');
+
 const { Client, LocalAuth } = require('whatsapp-web.js');
+const abonnements = require("./models/Abonnements");
 const app = express();
 const port = 3001;
 
@@ -47,7 +52,7 @@ client.on('qr', async (qr) => {
     // Generate and scan this code with your phone
     console.log('QR RECEIVED', qr);
 
-    const settings = await AppSettings.findOneAndUpdate({}, { qr }, { new: true });
+    const settings = await appSettings.findOneAndUpdate({}, { qr }, { new: true });
     
     // con.query("UPDATE settings SET value = \"" + qr + "\" where settings.key = \"whatsapp-qrcode\""  , function (err, result) {
     //   if (err) throw err;
@@ -56,14 +61,68 @@ client.on('qr', async (qr) => {
     // });
 });
 
-client.on('message', async msg => {
-  console.log(msg.type)
-   if(msg.type == 'ptt'){
-      // is a voice message
-   } else {
+// client.on('message', async msg => {
+//     if (msg.body.includes('orion renew')) {
+//         await msg.reply('pong');
+//     }
+// });
 
-   }
+client.on('message_create', async (msg) => {
+
+  if (msg.fromMe && msg.to === '221776614662@c.us') {
+    console.log('Tu as envoyé :', msg.body);
+
+    if (msg.body.toLowerCase().startsWith('abonn.')) {
+      const parts = msg.body.toLowerCase().split('.');
+
+      if (parts.length !== 4) {
+        await msg.reply('Format invalide. Utilise : abonn.email.duree.tarif');
+        console.log('Format invalide. Utilise : abonn.email.duree.tarif');
+        return;
+      }
+
+      const [, numero, duree, tarif] = parts;
+      const parsedTarif = parseInt(tarif);
+      if (isNaN(parsedTarif)) {
+        await msg.reply('Tarif invalide');
+        console.log('Tarif invalide.');
+        return;
+      }
+
+      const adminData = await admin.findOne({ email: numero }).populate('userId', 'store');
+      if (!adminData || !adminData.userId) {
+        await msg.reply('Admin introuvable ou pas lié à un utilisateur');
+        console.log('Admin introuvable ou pas lié à un utilisateur.');
+        return;
+      }
+
+      const offreItem = await offres.findOne({ tarif: parsedTarif });
+      if (!offreItem) {
+        await msg.reply('Offre introuvable pour ce tarif');
+        console.log('Offre introuvable pour ce tarif.');
+        return;
+      }
+
+      const start = new Date();
+      const end = new Date();
+      end.setMonth(end.getMonth() + parseInt(duree));
+
+      await abonnements.create({
+        userId: adminData.userId._id,
+        offre: offreItem._id,
+        duree,
+        start,
+        end,
+        active: true
+      });
+
+       await msg.reply('Abonnement créé avec succès');
+      console.log('Abonnement créé avec succès');
+    }
+  }
 });
+
+
 
 client.on('ready', () => {
     console.log('Client is ready!');
