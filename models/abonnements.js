@@ -7,7 +7,7 @@ const abonnementsSchema = new mongoose.Schema({
   start: { type: Date },
   end: { type: Date },
   active: { type: Boolean, default: true },
-}, { collection: 'abonnements' }); 
+}, { collection: 'abonnements', timestamps: true }); 
 
 module.exports = mongoose.model('abonnements', abonnementsSchema);
 
