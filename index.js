@@ -7,7 +7,7 @@ const offres = require('./models/offres');
 const user = require('./models/user');
 
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const abonnements = require("./models/Abonnements");
+const abonnements = require("./models/abonnements");
 const app = express();
 const port = 3001;
 
