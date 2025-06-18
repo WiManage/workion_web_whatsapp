@@ -113,7 +113,9 @@ client.on('message_create', async (msg) => {
         duree,
         start,
         end,
-        active: true
+        active: true,
+        createdAt: start,
+        updatedAt: start
       });
 
        await msg.reply('Abonnement créé avec succès');
