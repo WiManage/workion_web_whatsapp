@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect('mongodb+srv://CheikhM:Mongo123@cluster0.e8pz3ms.mongodb.net/orionrating?retryWrites=true&w=majority', {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
+    const conn = await mongoose.connect('mongodb://workion:workion1*!prod@185.207.250.27:26017/workion_prod?retryWrites=true&w=majority', {
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
