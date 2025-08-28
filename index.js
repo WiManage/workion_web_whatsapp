@@ -4,7 +4,7 @@ const connectDB = require('./db');
 const appSettings = require('./models/app_settings');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const app = express();
-const port = 3001;
+const port = 3002;
 
 
 
