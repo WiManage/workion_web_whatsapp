@@ -30,7 +30,7 @@ RUN npm ci
 COPY . ./
 # RUN node index.js
 # RUN cp -r ecosystem.config.js dist/ecosystem.config.js
-EXPOSE 3001
+EXPOSE 3002
 
 
 # CMD "pm2 start dist/main.js --name orion-backend" && "pm2 startup systemd" && "pm2 save"
