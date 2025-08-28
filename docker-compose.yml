@@ -6,9 +6,9 @@ services:
       restart: always
       build: .
       # volumes:
-      #   - ./:/usr/src/orion-backend-service
+      #   - ./:/usr/src/workion-backend-service
       ports:
-        - 3001:3001
+        - 3002:3002
       networks:
       - workion_network  # Connect to the custom network
 
