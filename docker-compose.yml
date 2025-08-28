@@ -2,7 +2,7 @@ version: '3'
 
 services:
     orion:
-      container_name: orion_web_whatsapp
+      container_name: workion_web_whatsapp
       restart: always
       build: .
       # volumes:
@@ -10,8 +10,8 @@ services:
       ports:
         - 3001:3001
       networks:
-      - orion_network  # Connect to the custom network
+      - workion_network  # Connect to the custom network
 
 networks:
-  orion_network:  # Define the custom network for inter-container communication
+  workion_network:
     driver: bridge

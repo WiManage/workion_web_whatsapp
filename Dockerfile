@@ -12,9 +12,9 @@ RUN apk add --no-cache bash chromium && npm install -g pm2 --unsafe-perm
 # USER orion
 
 # Create working directory
-RUN mkdir -p /usr/src/orion-web-whatsapp
+RUN mkdir -p /usr/src/workion-web-whatsapp
 # Set working directory
-WORKDIR /usr/src/orion-web-whatsapp
+WORKDIR /usr/src/workion-web-whatsapp
 
 # Définir la variable d'environnement pour le sandboxing
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
