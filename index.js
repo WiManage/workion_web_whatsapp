@@ -27,6 +27,7 @@ const client = (this._client = new Client({
     }),
 
     puppeteer: {
+      executablePath: '/usr/bin/chromium-browser',
       headless: true,
       args: [
         '--no-sandbox',
